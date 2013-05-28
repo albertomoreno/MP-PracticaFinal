@@ -12,6 +12,7 @@ private:
 
   void allocate();
   void free();
+  void intercambia(Signal& a, Signal& b);
 
 public:
   Signal();
@@ -24,6 +25,9 @@ public:
   double get (int f, int c) const ; // Devuelve img(i,j)
   bool readSignal(const char file[]); // Carga imagen file en img
   bool writeSignal(const char file[]) const; //Salva img en file
+
+  Signal& operator=(Signal signal);
+  Signal& operator*(int n);
 
 };
 

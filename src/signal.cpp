@@ -62,3 +62,31 @@ bool Signal::writeSignal(const char file[]) const{
   return true;
 }
 
+Signal& Signal::operator=(Signal s){
+  intercambia(*this, s);
+  return *this;
+}
+
+void Signal::intercambia(Signal& a, Signal& b){
+  double** tmp = a.image;
+  a.image = b.image;
+  b.image = tmp;
+
+  int r = a.rows;
+  a.rows = b.rows;
+  b.rows = r;
+
+  int c = a.cols;
+  a.cols = b.cols;
+  b.cols = c;
+}
+
+Signal& Signal::operator*(int n) {
+  for(int i = 0 ; i < rows ; i++) {
+    for(int j = 0 ; j < cols ; j++) {
+      image[i][j] *= n;
+    }
+  }
+  return *this;
+}
+
