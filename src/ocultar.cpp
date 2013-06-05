@@ -3,6 +3,10 @@
 #include <string.h>
 #include "procesar.h"
 #include "imagenES.h"
+#include "imagen.h"
+#include "signal.h"
+#include "correlacion.h"
+#include "conversiones.h"
 
 using namespace std;
 
@@ -10,8 +14,8 @@ const int MAXBUFFER = 1000000;
 const int MAXNAME = 100;
 const int MAXTEXT = 125000;
 
-int main() {
-
+int main(int argc, char* argv[]) {
+/*
   //Inicializamos las variables
   char name[MAXNAME];
   char salida[MAXNAME];
@@ -82,5 +86,20 @@ int main() {
 
   cout << "Codificado" << endl;
 
-  return 0;
+  return 0;*/
+
+  Imagen im;
+  im.readImage(argv[1]);
+  Signal s;
+  s = ImagenToSignal(im);
+  Signal f;
+  f.leerFiltro(argv[2]);
+
+  Signal Iout;
+  //Iout = correlacion(s, f);
+
+  Imagen imagen;
+  imagen = SignalToImagen(Iout);
+
+  imagen.writeImage(argv[3]);
 }

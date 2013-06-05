@@ -7,7 +7,7 @@ BIN = bin
 CXX = g++
 CPPFLAGS = -Wall -g  -I$(INC) -c
 
-all: $(BIN)/revelar $(BIN)/ocultar $(OBJ)/imagenES.o $(OBJ)/imagen.o $(OBJ)/signal.o $(OBJ)/procesar.o
+all: $(BIN)/revelar $(BIN)/ocultar $(OBJ)/imagenES.o $(OBJ)/imagen.o $(OBJ)/signal.o $(OBJ)/procesar.o $(OBJ)/conversiones.o $(OBJ)/correlacion.o
 
 # ************ Generación de documentación ******************
 #documentacion:
@@ -17,8 +17,8 @@ all: $(BIN)/revelar $(BIN)/ocultar $(OBJ)/imagenES.o $(OBJ)/imagen.o $(OBJ)/sign
 $(BIN)/revelar: $(OBJ)/imagenES.o $(OBJ)/procesar.o $(OBJ)/revelar.o
 	$(CXX) $(OBJ)/imagenES.o $(OBJ)/procesar.o $(OBJ)/revelar.o -o $(BIN)/revelar
 
-$(BIN)/ocultar: $(OBJ)/imagenES.o $(OBJ)/procesar.o $(OBJ)/ocultar.o
-	$(CXX) $(OBJ)/imagenES.o $(OBJ)/procesar.o $(OBJ)/ocultar.o -o $(BIN)/ocultar
+$(BIN)/ocultar: $(OBJ)/imagenES.o $(OBJ)/procesar.o $(OBJ)/ocultar.o $(OBJ)/imagen.o $(OBJ)/conversiones.o $(OBJ)/correlacion.o $(OBJ)/signal.o
+	$(CXX) $(OBJ)/imagenES.o $(OBJ)/procesar.o $(OBJ)/ocultar.o $(OBJ)/imagen.o $(OBJ)/conversiones.o $(OBJ)/correlacion.o $(OBJ)/signal.o -o $(BIN)/ocultar
 
 # ************ Compilación de módulos ************
 $(OBJ)/imagenES.o: $(SRC)/imagenES.cpp $(INC)/imagenES.h
@@ -38,6 +38,12 @@ $(OBJ)/revelar.o: $(SRC)/revelar.cpp
 
 $(OBJ)/ocultar.o: $(SRC)/ocultar.cpp
 	$(CXX) $(CPPFLAGS) $(SRC)/ocultar.cpp -o $(OBJ)/ocultar.o
+
+$(OBJ)/conversiones.o: $(SRC)/conversiones.cpp $(INC)/conversiones.h
+	$(CXX) $(CPPFLAGS) $(SRC)/conversiones.cpp -o $(OBJ)/conversiones.o
+
+$(OBJ)/correlacion.o: $(SRC)/correlacion.cpp $(INC)/correlacion.h
+	$(CXX) $(CPPFLAGS) $(SRC)/correlacion.cpp -o $(OBJ)/correlacion.o
 
 # ************ Limpieza ************
 clean:

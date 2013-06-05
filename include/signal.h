@@ -5,12 +5,15 @@
 
 using namespace std;
 
+#define FILTRO_TEXT "MP-FILTRO-T"
+#define FILTRO_BIN "MP-FILTRO-B"
+
 class Signal{
 private:
   int rows, cols;
   double **image;
 
-  void allocate();
+  void allocate(int f, int c);
   void free();
   void intercambia(Signal& a, Signal& b);
 
@@ -28,6 +31,8 @@ public:
 
   Signal& operator=(Signal signal);
   Signal& operator*(int n);
+
+  bool leerFiltro(const char *file);
 
 };
 
