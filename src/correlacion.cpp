@@ -21,19 +21,19 @@ Signal correlacion(const Signal &imagen, const Signal &filtro) {
   int mitadC=filtro.getCols()/2;
 
   int fila_inicio = mitadF;
-  int fila_fin = filas-1-mitadF;
+  int fila_fin = filas-mitadF;
   int col_inicio = mitadC;
-  int col_fin = columnas-1-mitadC;
+  int col_fin = columnas-mitadC;
 
   for (int i = fila_inicio; i < fila_fin; ++i) {
     for (int j = col_inicio; j < col_fin; ++j) {
-      int suma = 0.0;
-      for (int k = -mitadF; k < mitadF; ++k) {
-        for (int l = -mitadC; l < mitadC; ++l) {
+      double suma = 0.0;
+      for (int k = -mitadF; k <= mitadF; ++k) {
+        for (int l = -mitadC; l <= mitadC; ++l) {
           suma += imagen.get(i+k, j+l)*filtro.get(k+mitadF, l+mitadC);
         }
       }
-      Iout.set(i, j, suma);
+      Iout.set(i, j, max(min(suma, 1.0), 0.0));
     }
   }
 

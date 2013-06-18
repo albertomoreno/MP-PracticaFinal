@@ -13,13 +13,14 @@ private:
   int rows, cols;
   double **image;
 
-  void allocate(int f, int c);
+  void allocate();
   void free();
   void intercambia(Signal& a, Signal& b);
 
 public:
   Signal();
   Signal(int f, int c);
+  Signal(const Signal &other);
   ~Signal();
 
   int getRows () const; // Devuelve el número de filas de m

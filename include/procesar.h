@@ -10,14 +10,15 @@
 
 #include <iostream>
 #include "imagenES.h"
+#include "imagen.h"
 
 #define Byte unsigned char
 
 using namespace std;
 
 
-void codify(Byte str[], int length, Byte buffer[]);
-void decodify(Byte str[], int length, Byte buffer[]);
+void codify(Byte str[], int length, Imagen &img);
+void decodify(Byte str[], int length, Imagen &img);
 int size(Byte str[], int n);
 bool getBit(Byte b, int pos);
 void setBit(Byte &b, int pos, bool bit);

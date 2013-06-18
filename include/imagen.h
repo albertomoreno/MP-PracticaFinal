@@ -19,6 +19,7 @@ private:
 public:
   Imagen();
   Imagen(int f, int c);
+  Imagen(const Imagen &other);
   ~Imagen();
 
   int getRows () const; // Devuelve el número de filas de m

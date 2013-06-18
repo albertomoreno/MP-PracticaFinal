@@ -7,8 +7,8 @@
 
 using namespace std;
 
-Signal& ImagenToSignal(const Imagen &im);
-Imagen& SignalToImagen(const Signal &s);
+Signal ImagenToSignal(const Imagen &im);
+Imagen SignalToImagen(const Signal &s);
 
 
 #endif

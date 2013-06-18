@@ -10,26 +10,37 @@ using namespace std;
 Signal::Signal(){
   rows = 0;
   cols = 0;
-  allocate(rows, cols);
 }
 
 Signal::Signal(int f, int c){
   rows = f;
   cols = c;
-  allocate(f, c);
+  allocate();
+}
+
+Signal::Signal(const Signal &other) {
+  rows = other.rows;
+  cols = other.cols;
+  for(int i = 0 ; i < rows ; i++) {
+    for(int j = 0 ; j < cols ; j++) {
+      image[i][j] = other.image[i][j];
+    }
+  }
 }
 
 Signal::~Signal(){
+  if(rows==0 && cols==0)
+    return;
   free();
   rows = 0;
   cols = 0;
   image = 0;
 }
 
-void Signal::allocate(int f, int c){
-  image = new double* [f];
-  for (int i = 0 ; i < f ; i++){
-    image[i] = new double [c];
+void Signal::allocate(){
+  image = new double* [rows];
+  for (int i = 0 ; i < rows ; i++){
+    image[i] = new double [cols];
   }
 }
 
@@ -93,13 +104,13 @@ Signal& Signal::operator*(int n) {
 }
 
 bool Signal::leerFiltro(const char *file) {
-  ifstream fi(file, ios::in);
+  ifstream fi(file);
   if(!fi) {
     cerr << "Error al crear el flujo" << endl;
     return false;
   }
 
-  char *cad_mag = new char[256];
+  char cad_mag[256];
   fi.getline(cad_mag, 256, '\n');
   if(strcmp(cad_mag, FILTRO_TEXT) == 0) {
     if(fi.peek() == '#') {
@@ -109,12 +120,14 @@ bool Signal::leerFiltro(const char *file) {
     int filas, columnas;
     fi >> filas >> columnas;
 
-    this->allocate(filas, columnas);
+    rows = filas;
+    cols = columnas;
+    allocate();
     double v;
     for(int i = 0 ; i < filas ; i++){
       for(int j = 0 ; j < columnas ; j++) {
         fi >> v;
-        this->set(i, j, v);
+        set(i, j, v);
       }
     }
   } else if(strcmp(cad_mag, FILTRO_BIN) == 0) {

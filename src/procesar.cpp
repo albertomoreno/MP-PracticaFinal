@@ -1,28 +1,40 @@
  
 #include <iostream>
 #include "imagenES.h"
+#include "imagen.h"
 #include "procesar.h"
 
 using namespace std;
 
-void codify(Byte str[], int length, Byte buffer[]) {
+void codify(Byte str[], int length, Imagen &img) {
+  int cols = img.getCols();
   int pos = 0;     //Se usa para indicar la posicion del buffer
+
   for(int i = 0 ; i < length ; i++) {
     for (int j = 0; j < 8; ++j) {
-      setBit(buffer[pos], 0, getBit(str[i], j));
+      int f = pos/cols;
+      int c = pos%cols;
+
+      Byte b = img.get(f, c);
+      setBit(b, 0, getBit(str[i], j));
+      img.set(f, c, b);
+
       pos++;
     }
   }
 }
 
-void decodify(Byte str[], int length, Byte buffer[]) {
+void decodify(Byte str[], int length, Imagen &img) {
+  int cols = img.getCols();
   int pos = 0;     //Se usa para indicar la posicion del buffer
+
   for(int i = 0 ; i < length ; i++) {
     for (int j = 0; j < 8; ++j) {
-      setBit(str[i], j, getBit(buffer[pos], 0));
+      int f = pos/cols;
+      int c = pos%cols;
+      setBit(str[i], j, getBit(img.get(f, c), 0));
       pos++;
     }
-    
   }
 }
 

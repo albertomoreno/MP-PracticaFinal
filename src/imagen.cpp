@@ -8,7 +8,6 @@ using namespace std;
 Imagen::Imagen(){
   rows = 0;
   cols = 0;
-  allocate();
 }
 
 Imagen::Imagen(int f, int c){
@@ -17,7 +16,20 @@ Imagen::Imagen(int f, int c){
   allocate();
 }
 
+Imagen::Imagen(const Imagen &other) {
+  rows = other.rows;
+  cols = other.cols;
+  for(int i = 0 ; i < rows ; i++) {
+    for(int j = 0 ; j < cols ; j++) {
+      image[i][j] = other.image[i][j];
+    }
+  }
+}
+
 Imagen::~Imagen(){
+  if(rows==0 && cols==0)
+    return;
+
   free();
   rows = 0;
   cols = 0;
@@ -60,7 +72,7 @@ bool Imagen::readImage(const char file[]){
   if(!LeerImagenPGM (file, rows, cols, buffer))
     return false;
 
-  Imagen img(rows, cols);
+  allocate();
 
   for (int i = 0 ; i < rows ; ++i) {
     for (int j = 0; j < cols; ++j) {

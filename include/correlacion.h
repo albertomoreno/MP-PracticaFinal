@@ -7,6 +7,6 @@
 
 using namespace std;
 
-Signal correlacion(Imagen imagen, Signal filtro);
+Signal correlacion(const Signal &imagen, const Signal &filtro);
 
 #endif
