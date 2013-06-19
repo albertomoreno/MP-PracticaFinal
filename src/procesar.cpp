@@ -43,6 +43,7 @@ int size(Byte str[], int n){
   while(str[length] != '\0' && length < n){
     length++;
   }
+  str[length] = '\0';
   length++;
 
   return length;
@@ -62,3 +63,24 @@ void setBit(Byte &b, int pos, bool bit) {
   else
     b = b & ~(1<<pos);
 }
+
+Imagen resaltar(Imagen &imagen, int x, int y, int sizeR, int sizeC) { 
+  //sizeRows, sizeCols
+  //(x,y) = centro
+  int f = imagen.getRows();
+  int c = imagen.getCols();
+  Imagen img(f, c);
+
+  for (int i = 0; i < f; ++i) {
+    for (int j = 0; j < c; ++j) {
+      if(i < (x+sizeR) && i > (x-sizeR) && j < (x+sizeC) && j > (x-sizeC)) {
+        img.set(i, j, imagen.get(i,j));
+      } else {
+        img.set(i, j, imagen.get(i,j)*0.5);
+      }
+    }
+  }
+
+  return img;
+}
+

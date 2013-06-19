@@ -7,7 +7,8 @@ BIN = bin
 CXX = g++
 CPPFLAGS = -Wall -g  -I$(INC) -c -Werror
 
-all: $(BIN)/filtrar $(BIN)/ocultar $(BIN)/revelar
+all: $(BIN)/buscar_Wally $(BIN)/filtrar 
+#$(BIN)/ocultar $(BIN)/revelar
 
 # ************ Generación de documentación ******************
 #documentacion:
@@ -23,6 +24,10 @@ $(BIN)/ocultar: $(OBJ)/imagenES.o $(OBJ)/procesar.o $(OBJ)/ocultar.o $(OBJ)/imag
 $(BIN)/filtrar: $(OBJ)/imagen.o $(OBJ)/signal.o $(OBJ)/conversiones.o $(OBJ)/correlacion.o $(OBJ)/filtrar.o $(OBJ)/imagenES.o
 	$(CXX) $^ -o $(BIN)/filtrar
 
+$(BIN)/buscar_Wally: $(OBJ)/imagen.o $(OBJ)/signal.o $(OBJ)/conversiones.o $(OBJ)/correlacion.o $(OBJ)/buscar_Wally.o $(OBJ)/imagenES.o $(OBJ)/procesar.o
+	$(CXX) $^ -o $(BIN)/buscar_Wally
+
+
 # ************ Compilación de módulos ************
 $(OBJ)/imagenES.o: $(SRC)/imagenES.cpp $(INC)/imagenES.h
 	$(CXX) $(CPPFLAGS) $(SRC)/imagenES.cpp -o $(OBJ)/imagenES.o
@@ -36,8 +41,11 @@ $(OBJ)/signal.o: $(SRC)/signal.cpp $(INC)/signal.h
 $(OBJ)/procesar.o: $(SRC)/procesar.cpp $(INC)/procesar.h
 	$(CXX) $(CPPFLAGS) $(SRC)/procesar.cpp -o $(OBJ)/procesar.o
 
-$(OBJ)/filtrar.o: $(SRC)/filtrar.cpp
-	$(CXX) $(CPPFLAGS) $(SRC)/filtrar.cpp -o $(OBJ)/filtrar.o
+$(OBJ)/conversiones.o: $(SRC)/conversiones.cpp $(INC)/conversiones.h
+	$(CXX) $(CPPFLAGS) $(SRC)/conversiones.cpp -o $(OBJ)/conversiones.o
+
+$(OBJ)/correlacion.o: $(SRC)/correlacion.cpp $(INC)/correlacion.h
+	$(CXX) $(CPPFLAGS) $(SRC)/correlacion.cpp -o $(OBJ)/correlacion.o
 
 $(OBJ)/revelar.o: $(SRC)/revelar.cpp
 	$(CXX) $(CPPFLAGS) $(SRC)/revelar.cpp -o $(OBJ)/revelar.o
@@ -45,11 +53,11 @@ $(OBJ)/revelar.o: $(SRC)/revelar.cpp
 $(OBJ)/ocultar.o: $(SRC)/ocultar.cpp
 	$(CXX) $(CPPFLAGS) $(SRC)/ocultar.cpp -o $(OBJ)/ocultar.o
 
-$(OBJ)/conversiones.o: $(SRC)/conversiones.cpp $(INC)/conversiones.h
-	$(CXX) $(CPPFLAGS) $(SRC)/conversiones.cpp -o $(OBJ)/conversiones.o
+$(OBJ)/filtrar.o: $(SRC)/filtrar.cpp
+	$(CXX) $(CPPFLAGS) $(SRC)/filtrar.cpp -o $(OBJ)/filtrar.o
 
-$(OBJ)/correlacion.o: $(SRC)/correlacion.cpp $(INC)/correlacion.h
-	$(CXX) $(CPPFLAGS) $(SRC)/correlacion.cpp -o $(OBJ)/correlacion.o
+$(OBJ)/buscar_Wally.o: $(SRC)/buscar_Wally.cpp
+	$(CXX) $(CPPFLAGS) $(SRC)/buscar_Wally.cpp -o $(OBJ)/buscar_Wally.o
 
 # ************ Limpieza ************
 clean:

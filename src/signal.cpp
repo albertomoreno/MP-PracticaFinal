@@ -131,7 +131,33 @@ bool Signal::leerFiltro(const char *file) {
       }
     }
   } else if(strcmp(cad_mag, FILTRO_BIN) == 0) {
-    
+    if(fi.peek() == '#') {
+      fi.ignore(256, '\n');
+    }
+
+    int filas, columnas;
+    fi >> filas >> columnas;
+
+    rows = filas;
+    cols = columnas;
+    allocate();
+    while (fi.peek() == '\n' || fi.peek() == '\r') { //Ignorar los saltos de línea 
+      fi.ignore(); 
+    }
+
+    int pos = fi.tellg();
+    fi.close();
+    fi.open(file, ios::binary);
+    fi.seekg(pos);
+    double data[rows*cols];
+    fi.read(reinterpret_cast<char *> (data), sizeof(double)*rows*cols);
+    for(int i = 0 ; i < rows ; i++){
+      for(int j = 0 ; j < cols ; j++) {
+        image[i][j] = data[i*cols+j];
+      }
+    }
+    fi.close();
+
   } else {
     cerr << "Cadena Magica no reconocida." << endl;
     fi.close();

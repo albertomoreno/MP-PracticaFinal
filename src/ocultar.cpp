@@ -2,7 +2,6 @@
 #include <iostream>
 #include <string.h>
 #include "procesar.h"
-#include "imagenES.h"
 #include "imagen.h"
 
 using namespace std;

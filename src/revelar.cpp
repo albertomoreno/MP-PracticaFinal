@@ -1,7 +1,7 @@
 
 #include <iostream>
 #include "procesar.h"
-#include "imagenES.h"
+#include "imagen.h"
 
 using namespace std;
 
@@ -15,7 +15,6 @@ int main(int argc, char* argv[]) {
     return 1;
   }
 
-  //Inicializamos las variables
   char* name = argv[1];
   Imagen img;
   Byte str[MAXTEXT];
@@ -28,7 +27,6 @@ int main(int argc, char* argv[]) {
 
   cout << "Revelando..." << endl;
 
-  //Se obtiene el texto integrado en la imagen
   decodify(str, min(MAXTEXT, img.getRows()*img.getCols()/8), img);
 
   cout << "El mensaje obtenido es: " << str << endl;

@@ -23,6 +23,8 @@ int size(Byte str[], int n);
 bool getBit(Byte b, int pos);
 void setBit(Byte &b, int pos, bool bit);
 
+Imagen resaltar(Imagen &imagen, int x, int y, int sizeR, int sizeC);
+
 #endif
 
 /* Fin Fichero: codificar.h */
