@@ -36,4 +36,5 @@ int main(int argc, char* argv[]) {
 
   img.writeImage(argv[3]);
 
+  return 0;
 }

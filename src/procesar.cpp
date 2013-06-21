@@ -65,15 +65,13 @@ void setBit(Byte &b, int pos, bool bit) {
 }
 
 Imagen resaltar(Imagen &imagen, int x, int y, int sizeR, int sizeC) { 
-  //sizeRows, sizeCols
-  //(x,y) = centro
   int f = imagen.getRows();
   int c = imagen.getCols();
   Imagen img(f, c);
 
   for (int i = 0; i < f; ++i) {
     for (int j = 0; j < c; ++j) {
-      if(i < (x+sizeR) && i > (x-sizeR) && j < (x+sizeC) && j > (x-sizeC)) {
+      if(i < (x+sizeR) && i > (x-sizeR) && j < (y+sizeC) && j > (y-sizeC)) {
         img.set(i, j, imagen.get(i,j));
       } else {
         img.set(i, j, imagen.get(i,j)*0.5);

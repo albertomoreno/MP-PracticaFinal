@@ -1,7 +1,6 @@
 
 #include <iostream>
 #include "correlacion.h"
-#include "conversiones.h"
 
 using namespace std;
 
@@ -17,8 +16,8 @@ Signal correlacion(const Signal &imagen, const Signal &filtro) {
     }
   }
 
-  int mitadF=filtro.getRows()/2;
-  int mitadC=filtro.getCols()/2;
+  int mitadF = (filtro.getRows()-1)/2;
+  int mitadC = (filtro.getCols()-1)/2;
 
   int fila_inicio = mitadF;
   int fila_fin = filas-mitadF;
