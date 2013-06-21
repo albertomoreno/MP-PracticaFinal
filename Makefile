@@ -3,31 +3,31 @@ SRC = src
 INC = include
 OBJ = obj
 BIN = bin
+LIB = lib
 
 CXX = g++
 CPPFLAGS = -Wall -g  -I$(INC) -c -Werror
 
-all: $(BIN)/buscar_Wally $(BIN)/filtrar $(BIN)/construir_filtro
-#$(BIN)/ocultar $(BIN)/revelar
+all: $(BIN)/buscar_Wally $(BIN)/filtrar $(BIN)/construir_filtro $(BIN)/ocultar $(BIN)/revelar
 
 # ************ Generación de documentación ******************
 #documentacion:
 #	doxygen doc/doxys/Doxyfile
 	
 # ************ Compilación de ejecutables ************
-$(BIN)/revelar: $(OBJ)/imagenES.o $(OBJ)/procesar.o $(OBJ)/revelar.o $(OBJ)/imagen.o 
-	$(CXX) $(OBJ)/imagenES.o $(OBJ)/procesar.o $(OBJ)/revelar.o $(OBJ)/imagen.o -o $(BIN)/revelar
+$(BIN)/revelar: $(OBJ)/revelar.o $(LIB)/libimagen.a 
+	$(CXX) $^ -o $(BIN)/revelar
 
-$(BIN)/ocultar: $(OBJ)/imagenES.o $(OBJ)/procesar.o $(OBJ)/ocultar.o $(OBJ)/imagen.o 
-	$(CXX) $(OBJ)/imagenES.o $(OBJ)/procesar.o $(OBJ)/ocultar.o $(OBJ)/imagen.o -o $(BIN)/ocultar
+$(BIN)/ocultar: $(OBJ)/ocultar.o $(LIB)/libimagen.a
+	$(CXX) $^ -o $(BIN)/ocultar
 
-$(BIN)/filtrar: $(OBJ)/imagen.o $(OBJ)/signal.o $(OBJ)/conversiones.o $(OBJ)/correlacion.o $(OBJ)/filtrar.o $(OBJ)/imagenES.o
+$(BIN)/filtrar: $(OBJ)/filtrar.o $(LIB)/libimagen.a $(LIB)/libsignal.a
 	$(CXX) $^ -o $(BIN)/filtrar
 
-$(BIN)/buscar_Wally: $(OBJ)/imagen.o $(OBJ)/signal.o $(OBJ)/conversiones.o $(OBJ)/correlacion.o $(OBJ)/buscar_Wally.o $(OBJ)/imagenES.o $(OBJ)/procesar.o
+$(BIN)/buscar_Wally: $(OBJ)/buscar_Wally.o $(LIB)/libimagen.a $(LIB)/libsignal.a
 	$(CXX) $^ -o $(BIN)/buscar_Wally
 
-$(BIN)/construir_filtro: $(OBJ)/signal.o $(OBJ)/construir_filtro.o
+$(BIN)/construir_filtro: $(OBJ)/construir_filtro.o $(LIB)/libsignal.a
 	$(CXX) $^ -o $(BIN)/construir_filtro
 
 # ************ Compilación de módulos ************
@@ -63,6 +63,13 @@ $(OBJ)/buscar_Wally.o: $(SRC)/buscar_Wally.cpp
 
 $(OBJ)/construir_filtro.o: $(SRC)/construir_filtro.cpp
 	$(CXX) $(CPPFLAGS) $(SRC)/construir_filtro.cpp -o $(OBJ)/construir_filtro.o
+
+# ************ Compilación de librerias ************
+$(LIB)/libimagen.a: $(OBJ)/imagenES.o $(OBJ)/imagen.o $(OBJ)/procesar.o
+	ar rcs $(LIB)/libimagen.a $(OBJ)/imagenES.o $(OBJ)/imagen.o $(OBJ)/procesar.o
+
+$(LIB)/libsignal.a: $(OBJ)/signal.o $(OBJ)/conversiones.o $(OBJ)/correlacion.o
+	ar rcs $(LIB)/libsignal.a $(OBJ)/signal.o $(OBJ)/conversiones.o $(OBJ)/correlacion.o
 
 # ************ Limpieza ************
 clean:

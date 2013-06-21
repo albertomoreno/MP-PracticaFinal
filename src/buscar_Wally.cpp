@@ -48,9 +48,7 @@ int main(int argc, char* argv[]) {
       }
     }
   }
-
-  cout << "(x,y): (" << x << "," << y << ")" << endl;
-
+  
   Imagen Iout;
   Iout = resaltar(grande, x, y, peque.getRows(), peque.getCols());
 
