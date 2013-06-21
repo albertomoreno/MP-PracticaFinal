@@ -27,13 +27,12 @@ public:
   int getCols () const; // Devuelve el número de columnas de m
   void set (int f, int c, double v); // Hace img(i,j)=v
   double get (int f, int c) const ; // Devuelve img(i,j)
-  bool readSignal(const char file[]); // Carga imagen file en img
-  bool writeSignal(const char file[]) const; //Salva img en file
 
   Signal& operator=(Signal signal);
   Signal& operator*(int n);
 
   bool leerFiltro(const char *file);
+  bool crearFiltro(const char *file, char* tipo); 
 
 };
 

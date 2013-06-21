@@ -7,7 +7,7 @@ BIN = bin
 CXX = g++
 CPPFLAGS = -Wall -g  -I$(INC) -c -Werror
 
-all: $(BIN)/buscar_Wally $(BIN)/filtrar 
+all: $(BIN)/buscar_Wally $(BIN)/filtrar $(BIN)/construir_filtro
 #$(BIN)/ocultar $(BIN)/revelar
 
 # ************ Generación de documentación ******************
@@ -27,6 +27,8 @@ $(BIN)/filtrar: $(OBJ)/imagen.o $(OBJ)/signal.o $(OBJ)/conversiones.o $(OBJ)/cor
 $(BIN)/buscar_Wally: $(OBJ)/imagen.o $(OBJ)/signal.o $(OBJ)/conversiones.o $(OBJ)/correlacion.o $(OBJ)/buscar_Wally.o $(OBJ)/imagenES.o $(OBJ)/procesar.o
 	$(CXX) $^ -o $(BIN)/buscar_Wally
 
+$(BIN)/construir_filtro: $(OBJ)/signal.o $(OBJ)/construir_filtro.o
+	$(CXX) $^ -o $(BIN)/construir_filtro
 
 # ************ Compilación de módulos ************
 $(OBJ)/imagenES.o: $(SRC)/imagenES.cpp $(INC)/imagenES.h
@@ -58,6 +60,9 @@ $(OBJ)/filtrar.o: $(SRC)/filtrar.cpp
 
 $(OBJ)/buscar_Wally.o: $(SRC)/buscar_Wally.cpp
 	$(CXX) $(CPPFLAGS) $(SRC)/buscar_Wally.cpp -o $(OBJ)/buscar_Wally.o
+
+$(OBJ)/construir_filtro.o: $(SRC)/construir_filtro.cpp
+	$(CXX) $(CPPFLAGS) $(SRC)/construir_filtro.cpp -o $(OBJ)/construir_filtro.o
 
 # ************ Limpieza ************
 clean:

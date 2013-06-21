@@ -26,7 +26,7 @@ Signal ImagenToSignal(const Imagen &im) {
 
   for(int i = 0 ; i < filas ; i++) {
     for (int j = 0; j < columnas; ++j) {
-      s.set(i, j, im.get(i, j)/255.0);
+      s.set(i, j, max(min((im.get(i, j)/255.0),1.0),0.0));
     }
   }
 

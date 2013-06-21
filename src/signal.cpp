@@ -67,14 +67,6 @@ double Signal::get (int f, int c) const {
   return image[f][c];
 }
 
-bool Signal::readSignal(const char file[]){
-  return true;
-}
-
-bool Signal::writeSignal(const char file[]) const{
-  return true;
-}
-
 Signal& Signal::operator=(Signal s){
   intercambia(*this, s);
   return *this;
@@ -168,3 +160,47 @@ bool Signal::leerFiltro(const char *file) {
   return true;
 }
 
+bool Signal::crearFiltro(const char *file, char* tipo) {
+  ofstream fo(file);
+  if(!fo) {
+    cerr << "Error al abrir el archivo." << endl;
+    return false;
+  }
+
+  if(strcmp(tipo, "-t") == 0) {
+    fo << FILTRO_TEXT << endl;
+    fo << rows << " " << cols << endl;
+
+    for(int i = 0 ; i < rows ; i++){
+      for(int j = 0 ; j < cols ; j++) {
+        fo << image[i][j] << " ";
+      }
+      fo << endl;
+    }
+  } else if(strcmp(tipo, "-b") == 0) {
+    fo << FILTRO_BIN << endl;
+    fo << rows << " " << cols << endl;
+
+    int pos = fo.tellp();
+    fo.close();
+    fo.open(file, ios::app | ios::binary);
+    fo.seekp(pos);
+
+    double data[rows*cols];
+    for(int i = 0 ; i < rows ; i++){
+      for(int j = 0 ; j < cols ; j++) {
+        data[i*cols+j] = image[i][j];
+      }
+    }
+
+    fo.write(reinterpret_cast<char *> (data), sizeof(double)*rows*cols);
+
+  } else {
+    cerr << "Tipo no reconocido." << endl;
+    fo.close();
+    return false;
+  }
+
+  fo.close();
+  return true;
+}

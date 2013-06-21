@@ -33,7 +33,7 @@ Signal correlacion(const Signal &imagen, const Signal &filtro) {
           suma += imagen.get(i+k, j+l)*filtro.get(k+mitadF, l+mitadC);
         }
       }
-      Iout.set(i, j, max(min(suma, 1.0), 0.0));
+      Iout.set(i, j, suma);
     }
   }
 
